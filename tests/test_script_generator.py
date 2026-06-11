@@ -147,3 +147,111 @@ def test_save_yaml_creates_missing_directories(gen, monkeypatch, tmp_path):
     gen.save_yaml(VideoType.GANCHO, output_path=target)
 
     assert target.exists()
+
+
+# ---------------------------------------------------------------------------
+# validate_yaml
+# ---------------------------------------------------------------------------
+
+from script_generator import validate_yaml
+
+
+def test_validate_yaml_passes_for_all_types(gen):
+    """All three templates produce YAML that passes schema validation."""
+    for vtype in VideoType:
+        content = gen.generate_yaml(vtype)
+        validate_yaml(content)  # must not raise
+
+
+def test_validate_yaml_raises_on_missing_required_field():
+    invalid = "language: es\norientation: horizontal\n"
+    with pytest.raises(ValueError, match="title"):
+        validate_yaml(invalid)
+
+
+def test_validate_yaml_raises_on_missing_visual_asset_type():
+    invalid = (
+        "title: Test\n"
+        "speech_content: Hello\n"
+        "visual_assets:\n"
+        "  prompts:\n"
+        "    - some prompt\n"
+    )
+    with pytest.raises(ValueError, match="asset_type"):
+        validate_yaml(invalid)
+
+
+def test_validate_yaml_raises_on_invalid_yaml():
+    with pytest.raises(ValueError, match="YAML inválido"):
+        validate_yaml("key: [unclosed")
+
+
+def test_save_yaml_raises_before_writing_if_template_broken(gen, tmp_path, monkeypatch):
+    """If a template produces invalid output, save_yaml raises before touching disk."""
+    # Monkey-patch generate_yaml to return schema-invalid content
+    monkeypatch.setattr(gen, "generate_yaml", lambda *_: "not_a_valid_config: true")
+    target = tmp_path / "should_not_exist.yaml"
+
+    with pytest.raises(ValueError):
+        gen.save_yaml(VideoType.GANCHO, output_path=target)
+
+    assert not target.exists()
+
+
+# ---------------------------------------------------------------------------
+# _load_data_file
+# ---------------------------------------------------------------------------
+
+from script_generator.generator import _load_data_file
+import json
+
+
+def test_load_data_file_json(tmp_path):
+    f = tmp_path / "data.json"
+    f.write_text(json.dumps({"ide": "Kiro", "ram_puppy_mb": 300}))
+    result = _load_data_file(str(f))
+    assert result["ide"] == "Kiro"
+    assert result["ram_puppy_mb"] == 300
+
+
+def test_load_data_file_yaml(tmp_path):
+    f = tmp_path / "data.yaml"
+    f.write_text("ide: Trae\nram_puppy_mb: 290\n")
+    result = _load_data_file(str(f))
+    assert result["ide"] == "Trae"
+    assert result["ram_puppy_mb"] == 290
+
+
+def test_load_data_file_missing_raises(tmp_path):
+    with pytest.raises(FileNotFoundError):
+        _load_data_file(str(tmp_path / "nonexistent.json"))
+
+
+def test_data_file_values_used_in_output(gen, tmp_path):
+    """Values from --data file appear correctly in the rendered YAML."""
+    data_file = tmp_path / "bench.json"
+    data_file.write_text(json.dumps({
+        "ide": "Windsurf",
+        "ram_puppy_mb": 299,
+        "ram_windows_mb": 2900,
+        "response_puppy_sec": 0.9,
+        "response_windows_sec": 5.1,
+    }))
+    file_data = _load_data_file(str(data_file))
+    result = gen.generate_yaml(VideoType.BENCHMARK, file_data)
+    parsed = yaml.safe_load(result)
+    assert "Windsurf" in parsed["speech_content"]
+    assert "299" in parsed["speech_content"]
+    assert "2900" in parsed["speech_content"]
+    # ram_diff_mb: 2900 - 299 = 2601
+    assert "2601" in parsed["speech_content"]
+
+
+def test_cli_flag_overrides_data_file_value(gen, tmp_path):
+    """Explicit CLI args override values from the data file."""
+    # Simulate: file says Cursor, CLI says Kiro — Kiro should win
+    file_data = {"ide": "Cursor", "ram_puppy_mb": 310, "ram_windows_mb": 2800}
+    cli_override = {"ide": "Kiro"}
+    merged = {**file_data, **cli_override}
+    result = gen.generate_yaml(VideoType.GANCHO, merged)
+    assert "Kiro" in result

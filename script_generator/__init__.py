@@ -14,7 +14,7 @@ Usage:
     )
 """
 
-from .generator import ScriptGenerator, main
+from .generator import ScriptGenerator, main, validate_yaml
 from .types import VideoType
 
-__all__ = ["ScriptGenerator", "VideoType", "main"]
+__all__ = ["ScriptGenerator", "VideoType", "main", "validate_yaml"]

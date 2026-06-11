@@ -19,11 +19,9 @@ convertirla en alumnos del curso de pago.
 
 ## Fase 2 — Producción del primer video gancho
 
-El objetivo de esta fase es tener un video publicado en YouTube que genere tráfico al
-repositorio de GitHub.
+El objetivo de esta fase es tener un video publicado en YouTube que genere tráfico al repositorio de GitHub.
 
-- [ ] Medir métricas reales en TrixieRetro: RAM en frío, RAM con IDE abierto, tiempo de
-      respuesta del agente de IA vs. Windows con el mismo hardware
+- [ ] Medir métricas reales en TrixieRetro: RAM en frío, RAM con IDE abierto, tiempo de respuesta del agente de IA vs. Windows con el mismo hardware
 - [ ] Generar el YAML gancho con datos reales:
       `python script_generator.py --type gancho --ide Cursor --ram-puppy <real> --ram-windows <real>`
 - [ ] Revisar y ajustar el `speech_content` generado si hace falta

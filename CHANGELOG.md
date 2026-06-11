@@ -8,6 +8,18 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [0.4.0] — 2026-06-11
+
+### Added
+- `--data` CLI argument to load benchmark/video data directly from an external JSON or YAML file
+- `validate_yaml` exported function and internal check to ensure the generated configuration is valid YAML before writing to disk
+- Test coverage for `validate_yaml` and CLI data loading (`_load_data_file`), including CLI flag override behavior
+
+### Changed
+- CLI logic updated: explicit CLI arguments now correctly overlay and override values loaded from the `--data` file
+
+---
+
 ## [0.3.0] — 2026-06-11
 
 ### Changed

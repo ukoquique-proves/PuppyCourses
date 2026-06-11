@@ -3,8 +3,9 @@ from __future__ import annotations
 import argparse
 import os
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 
+import yaml
 from jinja2 import PackageLoader, Environment, StrictUndefined
 
 from .types import AUTO_TITLES, DEFAULTS, VideoType
@@ -31,6 +32,49 @@ def _default_inbox() -> Path:
     if env_path:
         return Path(env_path)
     return _RELATIVE_INBOX
+
+
+# ---------------------------------------------------------------------------
+# YAML schema validation
+# ---------------------------------------------------------------------------
+
+# Fields that VideoCreation's VideoConfiguration model requires (non-optional).
+_REQUIRED_FIELDS: List[str] = ["title", "speech_content", "visual_assets"]
+
+# Fields that must be present inside visual_assets.
+_REQUIRED_VISUAL_FIELDS: List[str] = ["asset_type"]
+
+
+def validate_yaml(content: str) -> None:
+    """
+    Parse `content` as YAML and verify it contains the fields required by
+    VideoCreation's VideoConfiguration schema.
+
+    Raises:
+        ValueError: with a descriptive message listing every missing field.
+    """
+    try:
+        parsed = yaml.safe_load(content)
+    except yaml.YAMLError as exc:
+        raise ValueError(f"YAML inválido: {exc}") from exc
+
+    if not isinstance(parsed, dict):
+        raise ValueError("El YAML no es un mapping de campos (dict esperado en la raíz).")
+
+    missing = [f for f in _REQUIRED_FIELDS if not parsed.get(f)]
+    if missing:
+        raise ValueError(
+            f"Campos requeridos por VideoCreation ausentes o vacíos: {missing}"
+        )
+
+    visual = parsed.get("visual_assets", {})
+    if not isinstance(visual, dict):
+        raise ValueError("'visual_assets' debe ser un mapping.")
+    missing_visual = [f for f in _REQUIRED_VISUAL_FIELDS if not visual.get(f)]
+    if missing_visual:
+        raise ValueError(
+            f"Campos requeridos dentro de 'visual_assets' ausentes: {missing_visual}"
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -88,6 +132,7 @@ class ScriptGenerator:
         lo guarda en <inbox>/<tipo>_<ide>.yaml.
         """
         content = self.generate_yaml(video_type, data)
+        validate_yaml(content)
 
         if output_path is None:
             ctx = self._build_context(video_type, data)
@@ -104,12 +149,52 @@ class ScriptGenerator:
 # CLI
 # ---------------------------------------------------------------------------
 
+# CLI args that have explicit defaults — used to detect "was this actually set
+# by the user?" so --data values aren't silently overridden by argparse defaults.
+_CLI_DEFAULTS: Dict[str, Any] = {
+    "ide":                  "Cursor",
+    "puppy":                "TrixieRetro",
+    "ram_puppy":            310,
+    "ram_windows":          2800,
+    "resp_puppy":           1.2,
+    "resp_windows":         4.8,
+    "install_minutes":      10,
+    "lang":                 "es",
+    "orientation":          "horizontal",
+}
+
+_CLI_TO_DATA_KEY: Dict[str, str] = {
+    "ide":             "ide",
+    "puppy":           "puppy_version",
+    "ram_puppy":       "ram_puppy_mb",
+    "ram_windows":     "ram_windows_mb",
+    "resp_puppy":      "response_puppy_sec",
+    "resp_windows":    "response_windows_sec",
+    "install_minutes": "install_minutes",
+    "lang":            "language",
+    "orientation":     "orientation",
+}
+
+
+def _load_data_file(path: str) -> Dict[str, Any]:
+    """Load benchmark data from a JSON or YAML file."""
+    import json
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"Archivo de datos no encontrado: {path}")
+    text = p.read_text(encoding="utf-8")
+    if p.suffix in (".yaml", ".yml"):
+        return yaml.safe_load(text) or {}
+    return json.loads(text)
+
+
 def _build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         description="Genera un YAML de guion para VideoCreation"
     )
     p.add_argument("--type", required=True, choices=[t.value for t in VideoType],
                    help="Tipo de video: gancho | benchmark | tutorial")
+    p.add_argument("--data",            default=None,          help="JSON/YAML con datos de prueba (ej: pruebas_trixie.json)")
     p.add_argument("--ide",             default="Cursor",      help="Nombre del IDE")
     p.add_argument("--puppy",           default="TrixieRetro", help="Versión de PuppyLinux")
     p.add_argument("--ram-puppy",       type=int,   default=310,  help="RAM MB de Puppy en frío")
@@ -127,17 +212,19 @@ def _build_parser() -> argparse.ArgumentParser:
 def main() -> None:
     args = _build_parser().parse_args()
 
-    data: Dict[str, Any] = {
-        "ide":                  args.ide,
-        "puppy_version":        args.puppy,
-        "ram_puppy_mb":         args.ram_puppy,
-        "ram_windows_mb":       args.ram_windows,
-        "response_puppy_sec":   args.resp_puppy,
-        "response_windows_sec": args.resp_windows,
-        "install_minutes":      args.install_minutes,
-        "language":             args.lang,
-        "orientation":          args.orientation,
-    }
+    # Start with file data (if provided), then overlay only CLI args that were
+    # explicitly set by the user (i.e. differ from argparse defaults).
+    data: Dict[str, Any] = _load_data_file(args.data) if args.data else {}
+
+    for cli_key, data_key in _CLI_TO_DATA_KEY.items():
+        cli_val = getattr(args, cli_key)
+        if cli_val != _CLI_DEFAULTS[cli_key]:
+            # User explicitly passed this flag — it wins over the file
+            data[data_key] = cli_val
+        elif data_key not in data:
+            # Not in file either — use the argparse default
+            data[data_key] = cli_val
+
     if args.title:
         data["title"] = args.title
 
