@@ -1,0 +1,10 @@
+# Secrets — never commit
+.env
+
+# Generated outputs
+generated_configs/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
