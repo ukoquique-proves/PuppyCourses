@@ -93,3 +93,57 @@ def test_output_is_parseable_yaml_for_all_types(gen):
         assert isinstance(parsed, dict), f"{vtype} did not produce a dict"
         assert "speech_content" in parsed
         assert "visual_assets" in parsed
+
+
+# ---------------------------------------------------------------------------
+# save_yaml — path resolution
+# ---------------------------------------------------------------------------
+
+def test_save_yaml_uses_env_var_inbox(gen, monkeypatch, tmp_path):
+    """VIDEOCREATION_INBOX env var overrides the default sibling path."""
+    monkeypatch.setenv("VIDEOCREATION_INBOX", str(tmp_path))
+
+    out = gen.save_yaml(VideoType.GANCHO, {"ide": "Kiro"})
+
+    assert out.parent == tmp_path
+    assert out.name == "gancho_kiro.yaml"
+    assert out.exists()
+    parsed = yaml.safe_load(out.read_text())
+    assert "Kiro" in parsed["speech_content"]
+
+
+def test_save_yaml_falls_back_to_relative_sibling(gen, monkeypatch, tmp_path):
+    """Without env var, output goes to the relative sibling inbox path."""
+    monkeypatch.delenv("VIDEOCREATION_INBOX", raising=False)
+
+    # Redirect _RELATIVE_INBOX to tmp_path so the test is self-contained
+    import script_generator.generator as gen_module
+    original = gen_module._RELATIVE_INBOX
+    gen_module._RELATIVE_INBOX = tmp_path
+    try:
+        out = gen.save_yaml(VideoType.BENCHMARK, {"ide": "Cursor"})
+        assert out.parent == tmp_path
+        assert out.name == "benchmark_cursor.yaml"
+    finally:
+        gen_module._RELATIVE_INBOX = original
+
+
+def test_save_yaml_explicit_out_overrides_everything(gen, monkeypatch, tmp_path):
+    """An explicit output_path always wins over env var and sibling path."""
+    monkeypatch.setenv("VIDEOCREATION_INBOX", str(tmp_path / "inbox"))
+    explicit = tmp_path / "custom" / "my_video.yaml"
+
+    out = gen.save_yaml(VideoType.TUTORIAL, {"ide": "Trae"}, output_path=explicit)
+
+    assert out == explicit
+    assert out.exists()
+
+
+def test_save_yaml_creates_missing_directories(gen, monkeypatch, tmp_path):
+    """save_yaml creates the target directory if it doesn't exist yet."""
+    target = tmp_path / "deeply" / "nested" / "dir" / "out.yaml"
+    assert not target.parent.exists()
+
+    gen.save_yaml(VideoType.GANCHO, output_path=target)
+
+    assert target.exists()

@@ -1,3 +1,5 @@
+# Runtime and dev dependencies — canonical source is pyproject.toml
+# Install everything with: pip install -e ".[dev]"
 jinja2==3.1.4
-pyyaml==6.0.2   # used by tests to validate rendered YAML
-pytest==8.3.5   # test runner
+pyyaml==6.0.2
+pytest==8.3.5

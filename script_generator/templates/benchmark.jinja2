@@ -1,0 +1,28 @@
+title: "{{ title }}"
+language: {{ language }}
+orientation: {{ orientation }}
+subtitles_enabled: true
+output_format: "mp4"
+tts_rate: "{{ tts_rate }}"
+image_engine: "{{ image_engine }}"
+
+speech_content: |
+  Hipótesis: ¿puede {{ ide }} correr mejor en Puppy Linux {{ puppy_version }}
+  que en un sistema tradicional?
+  Veamos los datos reales.
+  En Windows, el sistema consume {{ ram_windows_mb }} megabytes de RAM antes de abrir el IDE.
+  En Puppy Linux {{ puppy_version }}, el sistema operativo ocupa solo {{ ram_puppy_mb }} megabytes.
+  Eso significa {{ ram_diff_mb }} megabytes extra disponibles para tu agente de IA.
+  Tiempo de respuesta del agente en Windows: {{ response_windows_sec }} segundos.
+  Tiempo de respuesta en Puppy Linux: {{ response_puppy_sec }} segundos.
+  Los números no mienten. Puppy Linux {{ puppy_version }} es el entorno ideal
+  para programar con IA en hardware real.
+  Todos los scripts y configuraciones están en GitHub, link en la descripción.
+
+visual_assets:
+  asset_type: "text_prompts"
+  prompts:
+    - "System monitor dashboard showing Windows using {{ ram_windows_mb }}MB RAM vs Puppy Linux {{ puppy_version }} using {{ ram_puppy_mb }}MB RAM — bar chart style, clean data visualization, blue and red colors"
+    - "Stopwatch comparison: {{ response_windows_sec }}s label on left with Windows logo, {{ response_puppy_sec }}s label on right with Puppy Linux logo — minimal flat design, green winner highlight on right"
+    - "{{ ide }} AI agent generating code at full speed on a dark terminal — green text stream, fast and fluid — cinematic tech aesthetic"
+    - "GitHub repository showing benchmark scripts and results — developer-friendly UI illustration"

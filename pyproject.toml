@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "puppyteach"
+version = "0.2.0"
+requires-python = ">=3.11"
+dependencies = [
+    "jinja2==3.1.4",
+]
+
+[project.scripts]
+puppyteach = "script_generator:main"
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.5",
+    "pyyaml==6.0.2",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

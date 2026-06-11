@@ -1,0 +1,25 @@
+title: "{{ title }}"
+language: {{ language }}
+orientation: {{ orientation }}
+subtitles_enabled: true
+output_format: "mp4"
+tts_rate: "{{ tts_rate }}"
+image_engine: "{{ image_engine }}"
+
+speech_content: |
+  ¿Tu IDE de Inteligencia Artificial va lento?
+  {{ ide }}, Windsurf, Kiro, Trae... son herramientas increíbles,
+  pero Windows y Ubuntu consumen los recursos que tu agente de IA necesita.
+  La solución existe y corre en RAM: Puppy Linux {{ puppy_version }}.
+  Con solo {{ ram_puppy_mb }} megabytes de memoria en frío,
+  le devolvés toda la potencia a tu IA.
+  Bajate el script gratuito de instalación en el link de GitHub.
+  El link está en la descripción.
+
+visual_assets:
+  asset_type: "text_prompts"
+  prompts:
+    - "A frozen, lagging IDE on a dark screen with a spinning loader — frustrated developer — dramatic red lighting, cinematic style"
+    - "Split screen: left side Windows Task Manager at 90% RAM usage, right side Puppy Linux {{ puppy_version }} desktop using only {{ ram_puppy_mb }}MB RAM — clean minimal flat illustration"
+    - "{{ ide }} IDE running smoothly on Puppy Linux {{ puppy_version }}, AI code suggestion appearing instantly — green neon glow, dark background, hacker aesthetic"
+    - "GitHub repository page for PuppyCourses with a download script highlighted — clean UI screenshot style illustration"

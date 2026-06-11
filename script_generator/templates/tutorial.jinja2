@@ -1,0 +1,30 @@
+title: "{{ title }}"
+language: {{ language }}
+orientation: {{ orientation }}
+subtitles_enabled: true
+output_format: "mp4"
+tts_rate: "{{ tts_rate }}"
+image_engine: "{{ image_engine }}"
+
+speech_content: |
+  En este video vas a instalar y configurar {{ ide }} en Puppy Linux {{ puppy_version }}
+  desde cero, en menos de {{ install_minutes }} minutos.
+  Primero, descargá la ISO de {{ puppy_version }} desde el link oficial.
+  Luego, grabala en un pendrive con Ventoy o Rufus.
+  Al bootear, el sistema corre completamente en RAM:
+  eso significa velocidad máxima desde el primer segundo.
+  Una vez dentro, abrí el terminal y ejecutá el script de instalación
+  que encontrás en el repositorio de GitHub en la descripción.
+  El script instala {{ ide }}, configura las dependencias necesarias
+  y monta la persistencia para que tu entorno no se pierda al reiniciar.
+  En {{ install_minutes }} minutos tenés un entorno profesional con IA
+  listo para trabajar en cualquier máquina.
+  El link al script y al curso completo están en la descripción.
+
+visual_assets:
+  asset_type: "text_prompts"
+  prompts:
+    - "Puppy Linux {{ puppy_version }} boot screen loading from a USB drive — pixel art meets modern flat design, clean and colorful"
+    - "Terminal window showing installation commands running step by step — dark background, green monospace font, progress bars completing"
+    - "{{ ide }} opening for the first time on Puppy Linux desktop — clean workspace, AI chat panel visible, dark theme"
+    - "Split screen: USB pendrive on the left, a fully configured {{ ide }} with AI running on the right — before/after style, satisfying minimal illustration"

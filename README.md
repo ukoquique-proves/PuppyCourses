@@ -23,11 +23,13 @@ configuración YAML. VideoCreation los consume como si hubieran sido escritos a 
 
 ---
 
-## Requisito
+## Instalación
 
 ```bash
-pip install -r requirements.txt
+pip install -e ".[dev]"
 ```
+
+Esto instala el proyecto en modo editable junto con las dependencias de desarrollo (`pytest`, `pyyaml`). Los tests y el CLI funcionan desde cualquier directorio sin necesidad de configurar `PYTHONPATH`.
 
 ---
 
@@ -37,7 +39,9 @@ El generador necesita saber dónde vive el inbox de VideoCreation. Resuelve la r
 
 1. Variable de entorno `VIDEOCREATION_INBOX` (recomendado, portable)
 2. `../VideoCreation/watcher_folders/inbox` relativo a este proyecto (layout de hermanos)
-3. `generated_configs/` local (fallback para uso standalone o CI)
+
+Si el directorio no existe al escribir, se crea automáticamente. Si VideoCreation está en
+otra ubicación, usá la variable de entorno o el flag `--out`.
 
 Para configurar la opción 1, añadí esto a tu `.env` o shell:
 
@@ -61,15 +65,15 @@ export VIDEOCREATION_INBOX=/ruta/a/VideoCreation/watcher_folders/inbox
 
 ```bash
 # Video gancho para Kiro
-python script_generator.py --type gancho --ide Kiro
+python -m script_generator --type gancho --ide Kiro
 
 # Benchmark con métricas reales
-python script_generator.py --type benchmark --ide Cursor \
+python -m script_generator --type benchmark --ide Cursor \
   --ram-puppy 310 --ram-windows 2800 \
   --resp-puppy 1.1 --resp-windows 4.9
 
 # Tutorial para Trae, con ruta de salida personalizada
-python script_generator.py --type tutorial --ide Trae \
+python -m script_generator --type tutorial --ide Trae \
   --install-minutes 8 \
   --out generated_configs/tutorial_trae.yaml
 ```
@@ -136,7 +140,10 @@ python script_generator.py --type gancho --ide Kiro
 ```
 
 El destino por defecto se resuelve en este orden: `VIDEOCREATION_INBOX` env var →
-`../VideoCreation/watcher_folders/inbox` → `generated_configs/` local.
+`../VideoCreation/watcher_folders/inbox` relativo a este proyecto (sibling layout).
+
+Si el directorio no existe al momento de escribir, se crea automáticamente.
+Usá `--out` para especificar una ruta distinta de forma explícita.
 
 Para forzar salida local sin tocar el inbox:
 

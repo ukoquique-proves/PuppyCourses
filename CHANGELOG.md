@@ -8,6 +8,33 @@ All notable changes to this project will be documented here.
 
 ---
 
+## [0.3.0] — 2026-06-11
+
+### Changed
+- Restructured from a single flat `script_generator.py` into a proper package:
+  - `script_generator/types.py` — `VideoType`, `DEFAULTS`, `AUTO_TITLES`
+  - `script_generator/generator.py` — `ScriptGenerator`, `_default_inbox()`, CLI
+  - `script_generator/__init__.py` — public exports
+  - `script_generator/__main__.py` — `python -m script_generator` entry point
+- Jinja2 templates moved from inline Python strings to `.jinja2` files under
+  `script_generator/templates/` loaded via `PackageLoader`
+- `save_yaml` now calls `generate_yaml` internally instead of rendering the template
+  a second time independently
+- `_build_context` is now only called once per `save_yaml` invocation (for filename
+  derivation when `output_path` is `None`)
+- Stale module docstring note `Copiar a: VideoCreation/src/script_generator.py` removed
+- CLI examples in docstring corrected to `python -m script_generator`
+
+### Added
+- 4 new tests covering `save_yaml` and `_default_inbox()`:
+  - `VIDEOCREATION_INBOX` env var is resolved correctly
+  - Falls back to relative sibling path when env var is absent
+  - Explicit `output_path` always overrides env var and sibling path
+  - Missing directories are created automatically
+- `.gitignore` expanded: `*.egg-info/`, `dist/`, `build/`, `.venv/`, IDE folders, OS files
+
+---
+
 ## [0.2.0] — 2026-06-11
 
 ### Added
