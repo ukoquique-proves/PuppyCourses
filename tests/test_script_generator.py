@@ -247,11 +247,27 @@ def test_data_file_values_used_in_output(gen, tmp_path):
     assert "2601" in parsed["speech_content"]
 
 
-def test_cli_flag_overrides_data_file_value(gen, tmp_path):
-    """Explicit CLI args override values from the data file."""
+def test_cli_flag_overrides_data_file_value(monkeypatch, tmp_path):
+    """Explicit CLI args override values from the data file via main()."""
+    from script_generator.generator import main
+    import sys
+
     # Simulate: file says Cursor, CLI says Kiro — Kiro should win
-    file_data = {"ide": "Cursor", "ram_puppy_mb": 310, "ram_windows_mb": 2800}
-    cli_override = {"ide": "Kiro"}
-    merged = {**file_data, **cli_override}
-    result = gen.generate_yaml(VideoType.GANCHO, merged)
-    assert "Kiro" in result
+    data_file = tmp_path / "bench.json"
+    data_file.write_text(json.dumps({"ide": "Cursor", "ram_puppy_mb": 299, "ram_windows_mb": 2800}))
+    out_file = tmp_path / "out.yaml"
+
+    monkeypatch.setattr(sys, "argv", [
+        "script_generator",
+        "--type", "gancho",
+        "--data", str(data_file),
+        "--ide", "Kiro",  # override
+        "--out", str(out_file)
+    ])
+
+    main()
+
+    assert out_file.exists()
+    parsed = yaml.safe_load(out_file.read_text())
+    assert "Kiro" in parsed["speech_content"]
+    assert "299" in parsed["speech_content"]

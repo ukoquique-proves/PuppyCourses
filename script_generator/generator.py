@@ -61,16 +61,16 @@ def validate_yaml(content: str) -> None:
     if not isinstance(parsed, dict):
         raise ValueError("El YAML no es un mapping de campos (dict esperado en la raíz).")
 
-    missing = [f for f in _REQUIRED_FIELDS if not parsed.get(f)]
+    missing = [f for f in _REQUIRED_FIELDS if f not in parsed]
     if missing:
         raise ValueError(
-            f"Campos requeridos por VideoCreation ausentes o vacíos: {missing}"
+            f"Campos requeridos por VideoCreation ausentes: {missing}"
         )
 
     visual = parsed.get("visual_assets", {})
     if not isinstance(visual, dict):
         raise ValueError("'visual_assets' debe ser un mapping.")
-    missing_visual = [f for f in _REQUIRED_VISUAL_FIELDS if not visual.get(f)]
+    missing_visual = [f for f in _REQUIRED_VISUAL_FIELDS if f not in visual]
     if missing_visual:
         raise ValueError(
             f"Campos requeridos dentro de 'visual_assets' ausentes: {missing_visual}"
@@ -135,8 +135,8 @@ class ScriptGenerator:
         validate_yaml(content)
 
         if output_path is None:
-            ctx = self._build_context(video_type, data)
-            ide_slug = ctx["ide"].lower().replace(" ", "_")
+            ide = data.get("ide", DEFAULTS["ide"]) if data else DEFAULTS["ide"]
+            ide_slug = ide.lower().replace(" ", "_")
             output_path = _default_inbox() / f"{video_type.value}_{ide_slug}.yaml"
 
         out = Path(output_path)

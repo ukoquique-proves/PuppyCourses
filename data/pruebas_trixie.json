@@ -5,6 +5,7 @@
   "ram_windows_mb": 2750,
   "response_puppy_sec": 1.1,
   "response_windows_sec": 4.8,
+  "install_minutes": 10,
   "language": "es",
   "orientation": "horizontal"
 }
