@@ -17,8 +17,10 @@ configuración YAML. VideoCreation los consume como si hubieran sido escritos a 
 ├── tests/
 │   └── test_script_generator.py
 ├── generated_configs/      # YAMLs generados (fallback local, se crea automáticamente)
-├── Comercializacion.md     # Estrategia de distribución y embudo de ventas
-└── Cursos_posibles.txt     # Propuestas de cursos con análisis de mercado
+├── docs/
+│   ├── Comercializacion.md     # Estrategia de distribución y embudo de ventas
+│   ├── Cursos_posibles.txt     # Propuestas de cursos con análisis de mercado
+│   └── VideoCreation_handling.md # Arquitectura de integración
 ```
 
 ---
@@ -166,10 +168,10 @@ defecto y que el YAML renderizado sea siempre parseable.
 
 ## Estrategia de contenido
 
-Ver `Comercializacion.md` para el plan completo de distribución: YouTube, GitHub, Dev.to,
+Ver `docs/Comercializacion.md` para el plan completo de distribución: YouTube, GitHub, Dev.to,
 Reddit, embudo de email y micro-contenidos verticales.
 
-Ver `Cursos_posibles.txt` para las propuestas de cursos de pago y su análisis de mercado.
+Ver `docs/Cursos_posibles.txt` para las propuestas de cursos de pago y su análisis de mercado.
 
 El repositorio público del proyecto está en:
 https://github.com/ukoquique-proves/PuppyCourses

@@ -77,7 +77,7 @@ All notable changes to this project will be documented here.
 - `save_yaml` default output path updated to write directly to the VideoCreation
   `watcher_folders/inbox/` directory, replacing the previous `generated_configs/` local
   fallback, following the Drop Folder Watcher architecture described in
-  `VideoCreation_handling.md`
+  `docs/VideoCreation_handling.md`
 - README updated to reflect the new watcher-based workflow
 
 ---
@@ -90,7 +90,7 @@ All notable changes to this project will be documented here.
 - CLI interface: `python script_generator.py --type <type> [options]`
 - Auto-generated titles per video type when `--title` is not provided
 - Auto-calculated `ram_diff_mb` from `ram_windows_mb - ram_puppy_mb`
-- `Cursos_posibles.txt` updated to include Kiro alongside Cursor, Trae, and Windsurf
+- `docs/Cursos_posibles.txt` updated to include Kiro alongside Cursor, Trae, and Windsurf
   in the IDE list for the Opción 1 course syllabus
 - `README.md` documenting project structure, CLI usage, Python API, and full
   video production workflow
