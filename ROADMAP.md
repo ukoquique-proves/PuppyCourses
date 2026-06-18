@@ -17,18 +17,20 @@ convertirla en alumnos del curso de pago.
 
 ---
 
-## Fase 2 — Píldora Dev (contenido viral de entrada)
+## Fase 2 — Píldora Dev (contenido técnico de entrada)
 
-El objetivo de esta fase es publicar videos cortos verticales (Shorts / Reels / TikTok) de impacto rápido usando las plantillas `pildora.jinja2` y `teledigitos_hack.jinja2`, antes de entrar en la producción del gancho largo.
+El objetivo de esta fase es publicar videos horizontales dirigidos a desarrolladores usando las plantillas `pildora.jinja2` y `teledigitos_hack.jinja2`, con distribución en plataformas técnicas.
 
-- [ ] Medir RAM base real en TrixieRetro con el IDE abierto
+- [ ] Medir RAM base real en TrixieRetro con el IDE abierto y registrar tiempos de respuesta del agente
 - [ ] Generar el YAML píldora con datos reales:
       `python -m script_generator --type pildora --ide Cursor --truco-nombre "IA en RAM Mínima"`
 - [ ] Generar el YAML formato Teledígitos:
       `python -m script_generator --type teledigitos_hack --ide Cursor --truco-nombre "El Hack del Rendimiento"`
 - [ ] Revisar y ajustar el `speech_content` generado en ambas variantes si hace falta
-- [ ] Producir ambos videos verticales con VideoCreation (`orientation: vertical`)
-- [ ] Publicar en YouTube Shorts, TikTok e Instagram Reels
+- [ ] Producir ambos videos horizontales con VideoCreation (`orientation: horizontal`)
+- [ ] Publicar en YouTube con título y descripción orientados a búsqueda técnica
+- [ ] Publicar artículo/embed en Dev.to con los benchmarks como contexto
+- [ ] Compartir en Reddit (r/linux, r/puppylinux, r/programming) con enfoque técnico
 - [ ] Incluir CTA al repo de GitHub en descripción y comentario fijado
 
 ---
@@ -41,10 +43,9 @@ El objetivo de esta fase es tener un video publicado en YouTube que genere tráf
       `python script_generator.py --type gancho --ide Cursor --ram-puppy <real> --ram-windows <real>`
 - [ ] Revisar y ajustar el `speech_content` generado si hace falta
 - [ ] Producir el video con VideoCreation
-- [ ] Crear el video en versión vertical (YouTube Shorts / Reels) con `orientation: vertical`
-- [ ] Publicar en YouTube con título SEO optimizado
+- [ ] Publicar en YouTube con título SEO optimizado para búsqueda técnica
       Ejemplo: *"Configuré Cursor e IA en una PC de 2GB de RAM usando Puppy Linux (Y vuela)"*
-- [ ] Subir el video Short a YouTube Shorts, TikTok e Instagram Reels
+- [ ] Compartir en Reddit, Dev.to y comunidades técnicas hispanas
 
 ---
 
@@ -126,5 +127,4 @@ Una vez validado el Curso 1:
 
 - [ ] Módulo `github_publisher.py` — sube el YAML generado directamente al repo vía API
 - [ ] Plantillas en inglés para alcance internacional
-- [ ] Plantilla tipo `short` (30 s, vertical) como cuarto VideoType
 - [ ] CLI interactivo con prompts guiados para usuarios no técnicos
