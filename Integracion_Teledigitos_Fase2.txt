@@ -1,0 +1,95 @@
+# ================================================================================
+# GUÍA DE INTEGRACIÓN: FORMATO TELEDÍGITOS (FASE 2)
+# ================================================================================
+# Este archivo contiene la plantilla Jinja2 y el código del comando Click necesarios
+# para añadir tu guion personalizado al proyecto PuppyTeach.
+
+---
+PARTE 1: ARCHIVO DE PLANTILLA JINJA2
+Ruta sugerida: templates/teledigitos_hack.yaml.j2
+---
+# ================================================================================
+# PLANTILLA: Formato Teledígitos — El Secreto del Rendimiento (Fase 2)
+# Basado en la estructura original del autor con integración de IA
+# ================================================================================
+title: "El Secreto de Teledigitos: {{ truco_nombre | default('Programar sin Lag') }}"
+language: "es"
+orientation: "vertical"
+tts_backend: "openai"
+image_engine: "pollinations"
+image_style: "cinematic"
+subtitles_enabled: true
+
+speech_content: |
+  ¿Has notado lo mucho que puede enlentecerse tu desarrollo de código cuando el sistema operativo de tu PC empieza a resultar lento? 
+  Puede deberse a distintas causas, pero frecuentemente se debe a que los programadores usamos grandes cantidades de información y herramientas de Inteligencia Artificial que devoran tus recursos. 
+  Pero te tengo una sorpresa. Hay una combinación de recursos de software que minimizan el uso de tu PC, mediante una combinación de sistema operativo y herramientas gratuitas que te eliminarán radicalmente todo dolor de cabeza relacionado con eso. 
+  Quédate dos minutos, porque en este video vas a descubrir la herramienta gratuita que te va a cambiar totalmente tu manera de programar. 
+  Primero, observa cómo crear, desarrollar y ejecutar código en minutos. 
+  En vez de utilizar un sistema operativo promedio de gran cantidad de megabytes, usaremos el ultraliviano Puppy Linux, que permite hacer casi todos los mismos desarrollos que los sistemas pesados, pero de una manera mucho más rápida y práctica utilizando {{ ide | default('Cursor') }}. ¡Pon atención! 
+  Estoy seguro de que este video te voló la cabeza, y todo lo que has visto no tiene costo, es completamente gratis. 
+  Si te gustó el video dale like, suscríbete a este canal Teledígitos, y busca en nuestra plataforma para más secretos increíbles en el enlace de la descripción.
+
+visual_assets:
+  asset_type: "text_prompts"
+  prompts:
+    - "A stressed programmer looking at a frozen computer screen, clock ticking, dark tech room, dramatic lighting"
+    - "A glowing box opening revealing a bright software icon, professional corporate surprise concept"
+    - "A lightning fast cybernetic puppy running through digital data streams, tech background, high speed"
+    - "Sleek modern minimalist text overlay reading Teledigitos on a clean computer interface, subscribe icon glowing"
+
+
+---
+PARTE 2: CÓDIGO PYTHON PARA EL CLI
+Archivo: script_generator.py (Añadir al final del archivo antes del bloque __main__)
+---
+# ================================================================================
+# EXTENSIÓN PARA SCRIPT_GENERATOR.PY (Integración de Comando Click)
+# Añade este bloque a tu archivo principal para habilitar el comando de Teledígitos
+# ================================================================================
+
+@cli.command('generate-teledigitos')
+@click.option('--output', '-o', default='generated_configs/teledigitos_primero.yaml', help='Ruta del archivo YAML de salida.')
+@click.option('--ide', default='Cursor', help='IDE con IA que se menciona (Cursor, Trae, Windsurf).')
+@click.option('--truco-nombre', default='El Hack del Rendimiento', help='Nombre comercial o gancho del truco.')
+def generate_teledigitos(output, ide, truco_nombre):
+    """Genera el guion original fusionado con el formato y la marca de Teledígitos."""
+    try:
+        # 1. Preparar el contexto dinámico para Jinja2
+        context = {
+            'ide': ide,
+            'truco_nombre': truco_nombre
+        }
+        
+        # 2. Cargar y renderizar la plantilla dedicada de Teledígitos
+        template = env.get_template('teledigitos_hack.yaml.j2')
+        rendered_yaml = template.render(context)
+        
+        # 3. Validar y parsear el string renderizado para asegurar un formato YAML limpio
+        data = yaml.safe_load(rendered_yaml)
+        
+        # 4. Asegurar que el directorio de salida existe
+        out_path = Path(output)
+        out_path.parent.mkdir(parents=True, exist_ok=True)
+        
+        # 5. Guardar el archivo final listo para VideoCreation
+        with open(out_path, 'w', encoding='utf-8') as f:
+            yaml.dump(data, f, allow_unicode=True, sort_keys=False)
+            
+        click.echo(f"🚀 ¡Guion de Teledígitos (Fase 2) generado con éxito en: {out_path}!")
+        click.echo(f"🎥 Formato: Vertical | Canal: Teledígitos | IDE: {ide}")
+        
+    except Exception as e:
+        click.echo(f"❌ Error al generar el guion de Teledígitos: {e}", err=True)
+
+
+---
+PARTE 3: INSTRUCCIONES DE USO EN TERMINAL
+---
+Una vez guardados los archivos, puedes ejecutar las siguientes variantes en tu consola:
+
+1. Generar la versión base por defecto (con Cursor):
+   puppy-teach generate-teledigitos
+
+2. Generar una variación específica para el IDE Trae cambiando el nombre de salida:
+   puppy-teach generate-teledigitos --ide "Trae" --truco-nombre "Codigo sin Frenos" -o generated_configs/teledigitos_trae.yaml

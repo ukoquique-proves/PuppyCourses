@@ -161,6 +161,7 @@ _CLI_DEFAULTS: Dict[str, Any] = {
     "install_minutes":      10,
     "lang":                 "es",
     "orientation":          "horizontal",
+    "truco_nombre":         "El Hack del Rendimiento",
 }
 
 _CLI_TO_DATA_KEY: Dict[str, str] = {
@@ -173,6 +174,7 @@ _CLI_TO_DATA_KEY: Dict[str, str] = {
     "install_minutes": "install_minutes",
     "lang":            "language",
     "orientation":     "orientation",
+    "truco_nombre":    "truco_nombre",
 }
 
 
@@ -204,6 +206,7 @@ def _build_parser() -> argparse.ArgumentParser:
     p.add_argument("--install-minutes", type=int,   default=10,   help="Minutos instalación (tutorial)")
     p.add_argument("--lang",            default="es",             help="Idioma (es/en)")
     p.add_argument("--orientation",     default="horizontal",     choices=["horizontal", "vertical"])
+    p.add_argument("--truco-nombre",    default="El Hack del Rendimiento", help="Gancho/nombre del truco (pildora, teledigitos)")
     p.add_argument("--title",           default=None,             help="Título del video (opcional)")
     p.add_argument("--out",             default=None,             help="Ruta de salida YAML (opcional)")
     return p

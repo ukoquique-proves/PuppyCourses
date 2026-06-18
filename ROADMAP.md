@@ -19,12 +19,15 @@ convertirla en alumnos del curso de pago.
 
 ## Fase 2 — Píldora Dev (contenido viral de entrada)
 
-El objetivo de esta fase es publicar un video corto vertical (Shorts / Reels / TikTok) de impacto rápido usando la plantilla `pildora.jinja2`, antes de entrar en la producción del gancho largo.
+El objetivo de esta fase es publicar videos cortos verticales (Shorts / Reels / TikTok) de impacto rápido usando las plantillas `pildora.jinja2` y `teledigitos_hack.jinja2`, antes de entrar en la producción del gancho largo.
 
 - [ ] Medir RAM base real en TrixieRetro con el IDE abierto
-- [ ] Generar el YAML píldora con datos reales usando `script_generator/templates/pildora.jinja2`
-- [ ] Revisar y ajustar el `speech_content` generado si hace falta
-- [ ] Producir el video vertical con VideoCreation (`orientation: vertical`)
+- [ ] Generar el YAML píldora con datos reales:
+      `python -m script_generator --type pildora --ide Cursor --truco-nombre "IA en RAM Mínima"`
+- [ ] Generar el YAML formato Teledígitos:
+      `python -m script_generator --type teledigitos_hack --ide Cursor --truco-nombre "El Hack del Rendimiento"`
+- [ ] Revisar y ajustar el `speech_content` generado en ambas variantes si hace falta
+- [ ] Producir ambos videos verticales con VideoCreation (`orientation: vertical`)
 - [ ] Publicar en YouTube Shorts, TikTok e Instagram Reels
 - [ ] Incluir CTA al repo de GitHub en descripción y comentario fijado
 
