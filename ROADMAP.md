@@ -28,7 +28,24 @@ El objetivo de esta fase es publicar videos horizontales dirigidos a desarrollad
       `python -m script_generator --type pildora --ide Cursor --truco-nombre "IA en RAM Mínima"`
 - [x] Generar el YAML formato Teledígitos:
       `python -m script_generator --type teledigitos_hack --ide Cursor --truco-nombre "El Hack del Rendimiento"`
-- [ ] Producir ambos videos horizontales con VideoCreation (`orientation: horizontal`)
+
+### Mini-videos ilustrativos — Quejas reales de programadores
+
+Cada video (30-90 seg) abre con el dolor técnico exacto y cierra con la métrica de Puppy Linux.
+Fuente: `QuejasProgramadores.md`
+
+- [ ] **Queja 1 — Telemetría/Bloatware:** generar YAML y producir video
+      `python -m script_generator --type teledigitos_hack --ide Cursor --truco-nombre "Mata los procesos parásitos"`
+- [ ] **Queja 2 — Input lag en el IDE:** generar YAML y producir video
+      `python -m script_generator --type pildora --ide Trae --truco-nombre "Cero Latencia de Escritura" --resp-puppy 0.8 --resp-windows 3.5`
+- [ ] **Queja 3 — Actualizaciones que rompen el entorno:** generar YAML y producir video
+      `python -m script_generator --type teledigitos_hack --ide Windsurf --truco-nombre "El entorno que no se rompe solo"`
+- [ ] **Queja 4 — Laptop de viaje lenta:** generar YAML y producir video
+      `python -m script_generator --type pildora --ide Cursor --truco-nombre "Resucita tu laptop de viaje"`
+- [ ] **Queja 5 — Thermal throttling y batería:** generar YAML y producir video
+      `python -m script_generator --type pildora --ide Kiro --truco-nombre "Ventiladores apagados mientras programo con IA"`
+
+- [ ] Producir ambos videos horizontales principales con VideoCreation (`orientation: horizontal`)
 - [ ] Publicar en YouTube con título y descripción orientados a búsqueda técnica
 - [ ] Publicar artículo/embed en Dev.to con los benchmarks como contexto
 - [ ] Compartir en Reddit (r/linux, r/puppylinux, r/programming) con enfoque técnico
