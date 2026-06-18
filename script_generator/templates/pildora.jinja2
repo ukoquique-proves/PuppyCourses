@@ -2,20 +2,21 @@
 # PLANTILLA DE VIDEO: Píldora Dev — Formato técnico horizontal
 # Dirigido a desarrolladores. Distribución: YouTube, Dev.to, Reddit, GitHub
 # ================================================================================
-title: "Píldora Dev: {{ truco_nombre | default('IA en RAM mínima') }} con {{ ide | default('Cursor') }}"
-language: "es"
-orientation: "horizontal"
-tts_backend: "openai"
-image_engine: "pollinations"
-image_style: "cinematic"
+title: "{{ title }}"
+language: {{ language }}
+orientation: {{ orientation }}
 subtitles_enabled: true
+output_format: "{{ output_format }}"
+tts_rate: "{{ tts_rate }}"
+image_engine: "{{ image_engine }}"
+image_style: "cinematic"
 
 speech_content: |
-  Si tienes {{ ide | default('Cursor') }} abierto con agentes de IA activos y tu sistema operativo compitiendo por los mismos recursos, estás dejando rendimiento sobre la mesa.
+  Si tienes {{ ide }} abierto con agentes de IA activos y tu sistema operativo compitiendo por los mismos recursos, estás dejando rendimiento sobre la mesa.
   El problema no es el IDE. Es el overhead del sistema: telemetría, servicios en segundo plano, gestión de memoria conservadora.
-  Pasé el mismo flujo de trabajo a Puppy Linux TrixieRetro. El sistema arranca en RAM, sin servicios innecesarios.
-  Resultado: consumo base de {{ ram_puppy_mb | default('310') }} MB contra los {{ ram_windows_mb | default('2800') }} MB habituales en Windows. El agente de IA responde en {{ response_puppy_sec | default('1.2') }} segundos en vez de {{ response_windows_sec | default('4.8') }}.
-  No requiere hardware nuevo. El script de configuración y los benchmarks completos están en el repositorio: {{ github_url | default('https://github.com/ukoquique-proves/PuppyCourses') }}
+  Pasé el mismo flujo de trabajo a Puppy Linux {{ puppy_version }}. El sistema arranca en RAM, sin servicios innecesarios.
+  Resultado: consumo base de {{ ram_puppy_mb }} MB contra los {{ ram_windows_mb }} MB habituales en Windows. El agente de IA responde en {{ response_puppy_sec }} segundos en vez de {{ response_windows_sec }}.
+  No requiere hardware nuevo. El script de configuración y los benchmarks completos están en el repositorio: {{ github_url }}
 
 visual_assets:
   asset_type: "text_prompts"

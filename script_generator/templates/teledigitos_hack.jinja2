@@ -1,15 +1,16 @@
-title: "El Secreto de Teledigitos: {{ truco_nombre | default('Programar sin Lag') }}"
-language: "es"
-orientation: "horizontal"
-tts_backend: "openai"
-image_engine: "pollinations"
-image_style: "cinematic"
+title: "{{ title }}"
+language: {{ language }}
+orientation: {{ orientation }}
 subtitles_enabled: true
+output_format: "{{ output_format }}"
+tts_rate: "{{ tts_rate }}"
+image_engine: "{{ image_engine }}"
+image_style: "cinematic"
 
 speech_content: |
   ¿Has notado lo mucho que puede enlentecerse tu flujo de trabajo cuando el sistema operativo empieza a competir con tus herramientas de desarrollo?
   No es solo la RAM. Es la telemetría, los servicios en segundo plano y el overhead acumulado de un sistema diseñado para el usuario general, no para el desarrollador.
-  Existe una combinación de herramientas que cambia esa ecuación radicalmente: Puppy Linux TrixieRetro como sistema base, y {{ ide | default('Cursor') }} como entorno de desarrollo con agentes de IA.
+  Existe una combinación de herramientas que cambia esa ecuación radicalmente: Puppy Linux {{ puppy_version }} como sistema base, y {{ ide }} como entorno de desarrollo con agentes de IA.
   El sistema operativo arranca completamente en RAM, elimina el overhead de disco en tiempo de ejecución, y deja todos los recursos disponibles para lo que realmente importa: tu código y tu agente de IA.
   El resultado es un entorno que responde al instante, sin competencia de procesos innecesarios, en hardware que ya tienes.
   Todo lo que necesitas para replicarlo está documentado en el repositorio enlazado. Sin costos, sin dependencias propietarias.

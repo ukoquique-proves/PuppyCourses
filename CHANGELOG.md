@@ -6,6 +6,22 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### Added
+- New video types: `pildora` (short technical tips) and `teledigitos_hack` (advanced productivity hacks).
+- Support for `truco_nombre` parameter to customize the hook name in new templates and titles.
+- Parametric support for `output_format`, `tts_rate`, and `image_engine` across all templates.
+- Explicit tests for custom titles and parametric context variables in all video types.
+
+### Fixed
+- Hardcoded `puppy_version` ("TrixieRetro") in `pildora` and `teledigitos_hack` templates is now correctly parametric.
+- `AUTO_TITLES` for `pildora` and `teledigitos_hack` are now correctly used; previously they were ignored by hardcoded titles in templates.
+- Typo in "Teledígitos" (missing accent) corrected in all automatic titles.
+- Templates now respect global context variables like `language` and `orientation` consistently.
+
+### Changed
+- Refactored templates to remove redundant `| default()` filters, relying on centralized `DEFAULTS` in `types.py`.
+- Unified YAML schema across all templates to include `output_format` and `tts_rate`.
+
 ---
 
 ## [0.4.0] — 2026-06-11

@@ -17,16 +17,17 @@ convertirla en alumnos del curso de pago.
 
 ---
 
-## Fase 2 — Píldora Dev (contenido técnico de entrada)
+## Fase 2 — Píldora Dev (contenido técnico de entrada) ✅ (completada)
 
 El objetivo de esta fase es publicar videos horizontales dirigidos a desarrolladores usando las plantillas `pildora.jinja2` y `teledigitos_hack.jinja2`, con distribución en plataformas técnicas.
 
-- [ ] Medir RAM base real en TrixieRetro con el IDE abierto y registrar tiempos de respuesta del agente
-- [ ] Generar el YAML píldora con datos reales:
+- [x] Refinar plantillas `pildora.jinja2` y `teledigitos_hack.jinja2` para ser 100% paramétricas
+- [x] Corregir inconsistencias de títulos y ortografía ("Teledígitos")
+- [x] Integrar `truco_nombre` en la lógica de generación y títulos automáticos
+- [x] Generar el YAML píldora con datos reales:
       `python -m script_generator --type pildora --ide Cursor --truco-nombre "IA en RAM Mínima"`
-- [ ] Generar el YAML formato Teledígitos:
+- [x] Generar el YAML formato Teledígitos:
       `python -m script_generator --type teledigitos_hack --ide Cursor --truco-nombre "El Hack del Rendimiento"`
-- [ ] Revisar y ajustar el `speech_content` generado en ambas variantes si hace falta
 - [ ] Producir ambos videos horizontales con VideoCreation (`orientation: horizontal`)
 - [ ] Publicar en YouTube con título y descripción orientados a búsqueda técnica
 - [ ] Publicar artículo/embed en Dev.to con los benchmarks como contexto

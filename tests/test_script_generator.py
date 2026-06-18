@@ -271,3 +271,87 @@ def test_cli_flag_overrides_data_file_value(monkeypatch, tmp_path):
     parsed = yaml.safe_load(out_file.read_text())
     assert "Kiro" in parsed["speech_content"]
     assert "299" in parsed["speech_content"]
+
+
+def test_pildora_and_teledigitos_use_parametric_puppy_version(gen):
+    """Verify that puppy_version is no longer hardcoded in pildora and teledigitos_hack."""
+    data = {"puppy_version": "FocalFossa"}
+
+    # Test pildora
+    res_pildora = gen.generate_yaml(VideoType.PILDORA, data)
+    parsed_pildora = yaml.safe_load(res_pildora)
+    assert "FocalFossa" in parsed_pildora["speech_content"]
+    assert "TrixieRetro" not in parsed_pildora["speech_content"]
+
+    # Test teledigitos_hack
+    res_tele = gen.generate_yaml(VideoType.TELEDIGITOS, data)
+    parsed_tele = yaml.safe_load(res_tele)
+    assert "FocalFossa" in parsed_tele["speech_content"]
+    assert "TrixieRetro" not in parsed_tele["speech_content"]
+
+
+def test_pildora_and_teledigitos_honor_custom_title(gen):
+    """Verify that pildora and teledigitos_hack now use the {{ title }} variable."""
+    custom_title = "Mi Título Customizado"
+    
+    # Test pildora
+    res_pildora = gen.generate_yaml(VideoType.PILDORA, {"title": custom_title})
+    parsed_pildora = yaml.safe_load(res_pildora)
+    assert parsed_pildora["title"] == custom_title
+
+    # Test teledigitos_hack
+    res_tele = gen.generate_yaml(VideoType.TELEDIGITOS, {"title": custom_title})
+    parsed_tele = yaml.safe_load(res_tele)
+    assert parsed_tele["title"] == custom_title
+
+
+def test_pildora_and_teledigitos_use_auto_titles(gen):
+    """Verify that pildora and teledigitos_hack use AUTO_TITLES when no title is provided."""
+    # Test pildora auto-title
+    res_pildora = gen.generate_yaml(VideoType.PILDORA, {"ide": "Trae", "truco_nombre": "Hack RAM"})
+    parsed_pildora = yaml.safe_load(res_pildora)
+    # AUTO_TITLES[VideoType.PILDORA] = "Píldora Dev: {truco_nombre} con {ide}"
+    assert parsed_pildora["title"] == "Píldora Dev: Hack RAM con Trae"
+
+    # Test teledigitos_hack auto-title
+    res_tele = gen.generate_yaml(VideoType.TELEDIGITOS, {"ide": "Kiro", "truco_nombre": "El Super Hack"})
+    parsed_tele = yaml.safe_load(res_tele)
+    # AUTO_TITLES[VideoType.TELEDIGITOS] = "El Secreto de Teledígitos: {truco_nombre} con {ide}"
+    assert parsed_tele["title"] == "El Secreto de Teledígitos: El Super Hack con Kiro"
+    assert "Teledígitos" in parsed_tele["title"]  # Explicitly check for accent
+
+
+def test_pildora_and_teledigitos_honor_context_variables(gen):
+    """Verify that pildora and teledigitos_hack respect context variables like language and orientation."""
+    custom_data = {
+        "language": "en",
+        "orientation": "vertical",
+        "output_format": "mov",
+        "tts_rate": "+5%",
+        "image_engine": "dalle3"
+    }
+
+    for vtype in [VideoType.PILDORA, VideoType.TELEDIGITOS]:
+        res = gen.generate_yaml(vtype, custom_data)
+        parsed = yaml.safe_load(res)
+        assert parsed["language"] == "en"
+        assert parsed["orientation"] == "vertical"
+        assert parsed["output_format"] == "mov"
+        assert parsed["tts_rate"] == "+5%"
+        assert parsed["image_engine"] == "dalle3"
+
+
+def test_truco_nombre_is_reflected_in_auto_titles(gen):
+    """Verify that truco_nombre is correctly used in AUTO_TITLES for PILDORA and TELEDIGITOS."""
+    custom_truco = "Hack Extremo"
+    data = {"truco_nombre": custom_truco}
+
+    # Test pildora
+    res_pildora = gen.generate_yaml(VideoType.PILDORA, data)
+    parsed_pildora = yaml.safe_load(res_pildora)
+    assert custom_truco in parsed_pildora["title"]
+
+    # Test teledigitos_hack
+    res_tele = gen.generate_yaml(VideoType.TELEDIGITOS, data)
+    parsed_tele = yaml.safe_load(res_tele)
+    assert custom_truco in parsed_tele["title"]

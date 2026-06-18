@@ -55,11 +55,13 @@ export VIDEOCREATION_INBOX=/ruta/a/VideoCreation/watcher_folders/inbox
 
 ## Tipos de video
 
-| Tipo        | Descripción                                      | Duración aprox. |
-|-------------|--------------------------------------------------|-----------------|
-| `gancho`    | Corto e impactante. Problema → Solución → CTA    | 45–60 s         |
-| `benchmark` | Datos duros. RAM, tiempos de respuesta, métricas | 60–90 s         |
-| `tutorial`  | Paso a paso. Instalación desde cero              | 90–120 s        |
+| Tipo              | Descripción                                      | Duración aprox. |
+|-------------------|--------------------------------------------------|-----------------|
+| `gancho`          | Corto e impactante. Problema → Solución → CTA    | 45–60 s         |
+| `benchmark`       | Datos duros. RAM, tiempos de respuesta, métricas | 60–90 s         |
+| `tutorial`        | Paso a paso. Instalación desde cero              | 90–120 s        |
+| `pildora`         | Micro-contenido técnico para Devs                | 30–45 s         |
+| `teledigitos_hack`| El "secreto" de productividad sin lag            | 45–60 s         |
 
 ---
 
@@ -74,6 +76,10 @@ python -m script_generator --type benchmark --ide Cursor \
   --ram-puppy 310 --ram-windows 2800 \
   --resp-puppy 1.1 --resp-windows 4.9
 
+# Píldora técnica con nombre de truco personalizado
+python -m script_generator --type pildora --ide Trae \
+  --truco-nombre "El Hack de la RAM"
+
 # Tutorial para Trae, con ruta de salida personalizada
 python -m script_generator --type tutorial --ide Trae \
   --install-minutes 8 \
@@ -84,20 +90,21 @@ Por defecto los archivos se guardan en `generated_configs/<tipo>_<ide>.yaml`.
 
 ### Todos los parámetros
 
-| Parámetro           | Default        | Descripción                            |
-|---------------------|----------------|----------------------------------------|
-| `--type`            | (requerido)    | `gancho`, `benchmark` o `tutorial`     |
-| `--ide`             | `Cursor`       | Nombre del IDE                         |
-| `--puppy`           | `TrixieRetro`  | Versión de PuppyLinux                  |
-| `--ram-puppy`       | `310`          | RAM en MB de Puppy Linux en frío       |
-| `--ram-windows`     | `2800`         | RAM en MB de Windows en frío           |
-| `--resp-puppy`      | `1.2`          | Tiempo de respuesta IA en Puppy (seg)  |
-| `--resp-windows`    | `4.8`          | Tiempo de respuesta IA en Windows (seg)|
-| `--install-minutes` | `10`           | Minutos para instalación (tutorial)    |
-| `--lang`            | `es`           | Idioma del guion (`es` / `en`)         |
-| `--orientation`     | `horizontal`   | `horizontal` o `vertical`              |
-| `--title`           | (automático)   | Título del video                       |
-| `--out`             | (automático)   | Ruta de salida del YAML                |
+| Parámetro           | Default                   | Descripción                            |
+|---------------------|---------------------------|----------------------------------------|
+| `--type`            | (requerido)               | `gancho`, `benchmark`, `tutorial`, etc.|
+| `--ide`             | `Cursor`                  | Nombre del IDE                         |
+| `--puppy`           | `TrixieRetro`             | Versión de PuppyLinux                  |
+| `--ram-puppy`       | `310`                     | RAM en MB de Puppy Linux en frío       |
+| `--ram-windows`     | `2800`                    | RAM en MB de Windows en frío           |
+| `--resp-puppy`      | `1.2`                     | Tiempo de respuesta IA en Puppy (seg)  |
+| `--resp-windows`    | `4.8`                     | Tiempo de respuesta IA en Windows (seg)|
+| `--install-minutes` | `10`                      | Minutos para instalación (tutorial)    |
+| `--truco-nombre`    | `El Hack del Rendimiento` | Nombre del truco (pildora/teledigitos) |
+| `--lang`            | `es`                      | Idioma del guion (`es` / `en`)         |
+| `--orientation`     | `horizontal`              | `horizontal` o `vertical`              |
+| `--title`           | (automático)              | Título del video                       |
+| `--out`             | (automático)              | Ruta de salida del YAML                |
 
 ---
 

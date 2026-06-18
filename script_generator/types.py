@@ -16,6 +16,7 @@ DEFAULTS: Dict[str, Any] = {
     "title":                None,
     "language":             "es",
     "orientation":          "horizontal",
+    "output_format":        "mp4",
     "tts_rate":             "-10%",
     "image_engine":         "cloudflare",
     "ide":                  "Cursor",
@@ -33,6 +34,6 @@ AUTO_TITLES: Dict[VideoType, str] = {
     VideoType.GANCHO:       "PuppyLinux + {ide}: IA a máxima velocidad",
     VideoType.BENCHMARK:    "Benchmark: {ide} en PuppyLinux vs Windows",
     VideoType.TUTORIAL:     "Instalar {ide} en PuppyLinux {puppy_version} — Guía completa",
-    VideoType.PILDORA:      "Píldora Dev: IA en RAM mínima con {ide}",
-    VideoType.TELEDIGITOS:  "El Secreto de Teledígitos: Programar sin Lag con {ide}",
+    VideoType.PILDORA:      "Píldora Dev: {truco_nombre} con {ide}",
+    VideoType.TELEDIGITOS:  "El Secreto de Teledígitos: {truco_nombre} con {ide}",
 }
