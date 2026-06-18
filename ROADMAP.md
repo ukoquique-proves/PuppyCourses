@@ -17,11 +17,23 @@ convertirla en alumnos del curso de pago.
 
 ---
 
-## Fase 2 — Producción del primer video gancho
+## Fase 2 — Píldora Dev (contenido viral de entrada)
+
+El objetivo de esta fase es publicar un video corto vertical (Shorts / Reels / TikTok) de impacto rápido usando la plantilla `pildora.jinja2`, antes de entrar en la producción del gancho largo.
+
+- [ ] Medir RAM base real en TrixieRetro con el IDE abierto
+- [ ] Generar el YAML píldora con datos reales usando `script_generator/templates/pildora.jinja2`
+- [ ] Revisar y ajustar el `speech_content` generado si hace falta
+- [ ] Producir el video vertical con VideoCreation (`orientation: vertical`)
+- [ ] Publicar en YouTube Shorts, TikTok e Instagram Reels
+- [ ] Incluir CTA al repo de GitHub en descripción y comentario fijado
+
+---
+
+## Fase 3 — Producción del primer video gancho
 
 El objetivo de esta fase es tener un video publicado en YouTube que genere tráfico al repositorio de GitHub.
 
-- [ ] Medir métricas reales en TrixieRetro: RAM en frío, RAM con IDE abierto, tiempo de respuesta del agente de IA vs. Windows con el mismo hardware
 - [ ] Generar el YAML gancho con datos reales:
       `python script_generator.py --type gancho --ide Cursor --ram-puppy <real> --ram-windows <real>`
 - [ ] Revisar y ajustar el `speech_content` generado si hace falta
@@ -33,7 +45,7 @@ El objetivo de esta fase es tener un video publicado en YouTube que genere tráf
 
 ---
 
-## Fase 3 — Repositorio GitHub como hub técnico
+## Fase 4 — Repositorio GitHub como hub técnico
 
 El repo es el verdadero gancho para programadores. Llegan del video, encuentran valor
 técnico real y desde ahí se convierten en leads.
@@ -49,7 +61,7 @@ técnico real y desde ahí se convierten en leads.
 
 ---
 
-## Fase 4 — Video benchmark y video tutorial
+## Fase 5 — Video benchmark y video tutorial
 
 Con el gancho publicado y el repo activo, producir los dos videos complementarios.
 
@@ -63,7 +75,7 @@ Con el gancho publicado y el repo activo, producir los dos videos complementario
 
 ---
 
-## Fase 5 — Embudo de conversión
+## Fase 6 — Embudo de conversión
 
 Construir el puente entre el contenido gratuito y el curso de pago.
 
@@ -80,7 +92,7 @@ Construir el puente entre el contenido gratuito y el curso de pago.
 
 ---
 
-## Fase 6 — Lanzamiento del Curso (Opción 1)
+## Fase 7 — Lanzamiento del Curso (Opción 1)
 
 **Título:** *Entornos de Desarrollo de Alto Rendimiento: Optimización Extrema con Puppy Linux e IA*
 
@@ -96,7 +108,7 @@ Construir el puente entre el contenido gratuito y el curso de pago.
 
 ---
 
-## Fase 7 — Expansión (cursos avanzados)
+## Fase 8 — Expansión (cursos avanzados)
 
 Una vez validado el Curso 1:
 

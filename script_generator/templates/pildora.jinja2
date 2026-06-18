@@ -1,0 +1,28 @@
+# ================================================================================
+# PLANTILLA DE VIDEO: Píldora Dev / Hack Simpático (Fase 2)
+# Optimizado para formato vertical (Shorts, Reels, TikTok)
+# ================================================================================
+title: "Pildora Dev: {{ truco_nombre | default('IA en RAM') }}"
+language: "es"
+orientation: "vertical"
+tts_backend: "openai"
+image_engine: "pollinations"
+image_style: "cinematic"
+subtitles_enabled: true
+
+speech_content: |
+  ¿Sabías que estás desperdiciando gigabytes de memoria en tu entorno de desarrollo solo por culpa del sistema operativo? 
+  Sí, te hablo a ti, que tienes {{ ide | default('Cursor') }} abierto con tres agentes de Inteligencia Artificial y ya escuchas los ventiladores de tu laptop pidiendo clemencia. 
+  Mira esto: en vez de configurar entornos pesados, pasé mi flujo de trabajo a Puppy Linux TrixieRetro. 
+  Abrí el mismo proyecto, ejecuté el mismo agente de IA, ¡y el consumo base cayó a solo {{ ram_puppy_mb | default('250') }} megabytes! 
+  La IA responde al instante porque no compite contra la telemetría pesada del sistema. 
+  Un truco absurdamente simple, pero que te devuelve el control absoluto de tu hardware. 
+  Te dejo el script de configuración rápida en el GitHub de mi perfil. Pruébalo y me cuentas.
+
+visual_assets:
+  asset_type: "text_prompts"
+  prompts:
+    - "A laptop overheating with funny dramatic smoke cartoon style, cyber neon background, 4k"
+    - "A fast cute cybernetic puppy dog operating a giant clean digital control board, high-tech matrix style"
+    - "Dark minimalist code terminal showing lightning fast green text generation, cinematic tech aesthetic"
+    - "A developer hand making a thumbs up next to a glowing minimalist computer screen showing sleek linux desktop"
